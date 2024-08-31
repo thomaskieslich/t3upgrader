@@ -31,9 +31,9 @@ initUpgrade() {
     echo "Copy Production DB"
     rm -rf ${LOG_DIR}/*
     cp ${BASE_DB} ${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz
-#  else
-#    echo "Export current DB ..."
-#    ddev export-db -z -f ${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz | tee ${LOG_DIR}/upgrade-${version}.log
+  else
+    echo "Export current DB ..."
+    ddev export-db -z -f ${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz | tee ${LOG_DIR}/upgrade-${version}.log
   fi
 }
 
