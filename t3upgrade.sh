@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # set -x
-set -e
+# set -e
 
 # Get base Settings
 if [ -f ${BASH_SOURCE%/*}/.env ]; then
