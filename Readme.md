@@ -1,9 +1,13 @@
-# Update TYPO3 Versions
+# Upgrate TYPO3 Versions
 
-Update  ./operations/update/.env
+Set TYPO3 Versions to Root.env
 
-Update
-CMS_VERSIONS='11.5 12.4 …'
+```
+# t3upgrader CMS_VERSIONS='7.6 8.7 10.4 11.5 12.4' move to root .env
+CMS_VERSIONS='7.6'
+CURRENT_CMS_VERSION='7.6'
+```
+
 
 Always add only the respective version of the current branch in the .env file
 That means: if you start in branch 10.4, versions in .env file are only "10.4"
@@ -11,11 +15,7 @@ If you create (or switch) to the next branch 11.5, versions in .env file should 
 In the next branch 12.4, version should be "10.4 11.5 12.4" and so on … That gives you
 the possibility of running the upgrade only up to the current branch.
 
-Set current TYPO3 Version
-CURRENT_CMS_VERSION='11.5'
-
-
-## Run TYPO3 Upgrades
+## Run TYPO3 Upgrades from project Root
 ```
-./operations/update/update-versions
+./t3upgrader/t3upgrade.sh
 ```

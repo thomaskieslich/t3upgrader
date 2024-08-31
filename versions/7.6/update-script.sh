@@ -2,9 +2,11 @@
 
 set -ex
 
-if [ -f ${BASH_SOURCE%/*}/.env ]; then
-  source "${BASH_SOURCE%/*}/.env"
-fi
+# Get base Settings
+source "./t3upgrader/.env"
+
+# get Version Settings
+source ".env"
 
 importDb() {
   gunzip -q </mnt/ddev_config/backup/${CURRENT_CMS_VERSION}/typo3-db-${CURRENT_CMS_VERSION}.sql.gz | mysql -u'db' -p'db' -h'db' db
@@ -32,12 +34,12 @@ warmup() {
 upgrade() {
 #  vendor/bin/typo3cms database:updateschema
 #  vendor/bin/typo3cms upgrade:all
-  vendor/bin/typo3cms database:import <${DB_FIXTURES_DIR}${CURRENT_CMS_VERSION}".sql"
+  vendor/bin/typo3cms database:import < ${VERSIONS_DIR}/${CURRENT_CMS_VERSION}/"db-fixtures.sql"
   vendor/bin/typo3cms cache:flush
 }
 
-importDb
-cleanFolders
-composerInstall
-warmup
+#importDb
+#cleanFolders
+#composerInstall
+#warmup
 upgrade
