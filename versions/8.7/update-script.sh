@@ -8,11 +8,11 @@ source "./t3upgrader/.env"
 # get Version Settings
 source ".env"
 
-#7.6
+# 8.7
 vendor/bin/typo3cms install:generatepackagestates
 vendor/bin/typo3cms install:fixfolderstructure
 vendor/bin/typo3cms install:extensionsetupifpossible
-#  vendor/bin/typo3cms language:update
+#  vendor/bin/typo3 lang:language:update
 
 #  vendor/bin/typo3cms database:updateschema
 #  vendor/bin/typo3cms upgrade:all

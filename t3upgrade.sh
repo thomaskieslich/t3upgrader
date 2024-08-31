@@ -51,6 +51,16 @@ importCleanDB() {
   ddev import-db --file=${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz
 }
 
+cleanFolders() {
+  rm -rf ./public/_assets && rm -rf ./public/typo3 && rm -rf ./public/index.php
+  rm -rf ./var && rm -rf ./public/typo3temp
+  rm -rf ./vendor
+}
+
+composerInstall() {
+  ddev composer install${COMPOSER_OPTIONS}
+}
+
 updateTYPO3() {
   echo "Update TYPO3"
   ddev exec ${VERSIONS_DIR}/${version}/update-script.sh
@@ -73,8 +83,8 @@ finishUpgrade() {
 for version in "${VERSIONS[@]}"; do
   initUpgrade
   importCleanDB
-
+  cleanFolders
+  composerInstall
   updateTYPO3
-
   finishUpgrade
 done
