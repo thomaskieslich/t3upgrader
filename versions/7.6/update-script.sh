@@ -39,7 +39,7 @@ upgrade() {
 }
 
 #importDb
-#cleanFolders
-#composerInstall
-#warmup
+cleanFolders
+composerInstall
+warmup
 upgrade

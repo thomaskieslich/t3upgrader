@@ -20,9 +20,7 @@ LAST_VERSION=${VERSIONS[@]: -1}
 mkdir -p ${DB_BACKUP_DIR}
 mkdir -p ${LOG_DIR}
 
-# Loop through versions and upgrade step by step
-for version in "${VERSIONS[@]}"; do
-
+initUpgrade() {
   echo "Create DB Backup Dir"
   mkdir -p ${DB_BACKUP_DIR}/${version}
 
@@ -37,7 +35,9 @@ for version in "${VERSIONS[@]}"; do
     echo "Export current DB ..."
     ddev export-db -z -f ${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz | tee ${LOG_DIR}/upgrade-${version}.log
   fi
+}
 
+importCleanDB() {
   echo "Stop DDEV ..."
   ddev stop
 
@@ -49,12 +49,26 @@ for version in "${VERSIONS[@]}"; do
 
   echo "Import previous DB ..."
   ddev import-db --file=${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz
+}
 
+updateTYPO3() {
   echo "Update TYPO3"
   ddev exec ${VERSIONS_DIR}/${version}/update-script.sh
+}
 
+finishUpgrade() {
   echo "Export current DB ..."
   ddev export-db -z -f ${DB_BACKUP_DIR}/${version}/typo3-db-${version}-final.sql.gz | tee ${LOG_DIR}/upgrade-log-${version}.log
+}
+
+# Loop through versions and upgrade step by step
+for version in "${VERSIONS[@]}"; do
+  initUpgrade
+  importCleanDB
+
+  updateTYPO3
+
+  finishUpgrade
 
   # If not last version, stop DDEV and continue with next version
   if [ "${version}" != "${LAST_VERSION}" ]; then
