@@ -3,8 +3,8 @@
 Set TYPO3 Versions to Root.env
 
 ```
-# t3upgrader CMS_VERSIONS='7.6 8.7 10.4 11.5 12.4' move to root .env
-CMS_VERSIONS='7.6'
+# t3upgrader CMS_VERSIONS='7.6 8.7 10.4 11.5 12.4 13.4' move to root .env
+CMS_VERSIONS='7.6 8.7 10.4 11.5 12.4 13.4'
 CURRENT_CMS_VERSION='7.6'
 ```
 
