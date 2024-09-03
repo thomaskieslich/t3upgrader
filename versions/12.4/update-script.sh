@@ -8,7 +8,7 @@ source "./t3upgrader/.env"
 # get Version Settings
 source ".env"
 
-# 11.5
+# 12.4
 vendor/bin/typo3 -nq install:fixfolderstructure
 vendor/bin/typo3 -nq install:extensionsetupifpossible
 vendor/bin/typo3 -nq language:update
