@@ -69,7 +69,7 @@ updateTYPO3() {
 
 finishUpgrade() {
   echo "Export current DB ..."
-  ddev export-db -z -f ${DB_BACKUP_DIR}/${version}/typo3-db-${version}-final.sql.gz | tee ${LOG_DIR}/upgrade-log-${version}.log
+  ddev export-db -z -f ${DB_BACKUP_DIR}/${version}/typo3-db-${version}-final.sql.gz | tee ${LOG_DIR}/upgrade-${version}.log
 
     # If not last version, stop DDEV and continue with next version
     if [ "${version}" != "${LAST_VERSION}" ]; then
