@@ -104,13 +104,19 @@ Additionally you can put additional scripts there and add it to update-script.sh
 
 ### Example: Migration of gridlements to container at v12
 
-WIP: not implemented yet, its only theoretically
-WIP: add real implementation after did it practically
-
 1. remove gridelementsteam/gridelements from composer.json
 2. add b13/container to composer.json
 3. create migration script and put it in t3upgrader/versions/x.x
 4. Add line to upgrade-script.sh inside t3upgrader/versions/x.x to run script
+5. optional: you can put the lines directly in upgrade-script.sh
+
+Example
+```
+ddev typo3 gridtocontainer:migrateall 1 container_2columns_8-4 clean 0,1 200,201
+ddev typo3 gridtocontainer:migrateall 2 container_2columns_6-6 clean 0,1 200,201
+ddev typo3 gridtocontainer:migrateall 3 container_4columns_3-3-3-3 clean 0,1,2,3 200,201,202,203
+ddev typo3 gridtocontainer:migrateall 4 container_3columns_4-4-4 clean 0,1,2 200,201,202
+```
 
 ### Keep at specific version
 
