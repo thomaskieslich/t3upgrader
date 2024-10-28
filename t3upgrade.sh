@@ -9,7 +9,7 @@ if [ -f ${BASH_SOURCE%/*}/.env ]; then
 fi
 
 # get Version Settings
-source ".env"
+source "${ROOT_ENV_FILE}"
 
 VERSIONS=(${CMS_VERSIONS})
 
