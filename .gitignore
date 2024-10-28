@@ -1,5 +1,5 @@
-db-backup/*
-logs/*
-versions-override/*
+/db-backup/*
+/logs/*
+/versions-override/*
 
 /.env

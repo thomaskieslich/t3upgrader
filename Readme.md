@@ -1,7 +1,28 @@
 # Upgrate TYPO3 Versions
 
+Based on:
+
+https://github.com/peter-neumann-dev/ddev-cms-upgrader  
+
+https://typo3.org/article/automatic-typo3-updates-across-several-major-versions-with-ddev
+
+Thanks for this work.
+
+I changed the Concept to move the Processes outside of ddev and other things. 
+The Main Goal is to have one branch for each TYPO3 version and this Script to run the Upgrades 
+over all Version Branches.
+- can change the DB Version between Versions
+- can use custom script and DB Fixtures for each version
+- can be overwritten in versions-override Folder
+
+The code adjustments for each version still have to be made manually. 
+However, testing and upgrading with the current live data is much easier.
+I usually use https://github.com/thomaskieslich/t3static to test and customise the code.
+
 ## Install
+
 1. Create branch with the same Name like the current/legacy TYPO3 Version.
+
 ```bash
 git checkout -b typo3-11.5
 #or with subpath
@@ -9,6 +30,7 @@ git checkout -b upgrade/typo3-11.5
 ```
 
 2. Add this to root .gitignore to have the same code in all project Branches.
+
 ```ignore
 # TYPO3 Upgrade
 # t3upgrader https://github.com/thomaskieslich/t3upgrader
@@ -22,11 +44,13 @@ git checkout -b upgrade/typo3-11.5
 4. copy /t3upgrader/.env.dist to /t3upgrader/.env and Update the variables.
 
 5. create .env.upgrader in Project Root
+
 ```
 # t3upgrader CMS_VERSIONS='7.6 8.7 10.4 11.5 12.4 13.4' move to root .env.upgrader
 CMS_VERSIONS='11.5'
 CURRENT_CMS_VERSION='11.5'
 ```
+
 CMS_VERSIONS and CURRENT_CMS_VERSION should be identical in the Version you Start.
 
 Always add only the respective version of the current branch in the .env.upgrader file
@@ -37,6 +61,7 @@ the possibility of running the upgrade only up to the current branch.
 In Development testing you can set both versions to the current TYPO3 Version only.
 
 ## Run TYPO3 Upgrades from project Root
+
 ```
 ./t3upgrader/t3upgrade.sh
 ```
@@ -46,27 +71,34 @@ In Development testing you can set both versions to the current TYPO3 Version on
 ### .env
 
 #### CMS_VERSIONS
+
 Is changed per update branch (see below). All versions from starting version to current branch version
+
 ```
 CMS_VERSIONS='10.4 11.5 12.4'
 ```
 
 #### CURRENT_CMS_VERSION
+
 Current branch version
 
 Branch: typo3-11.5
+
 ```
 CURRENT_CMS_VERSION='11.5'
 ```
 
 Branch: typo3-12.4
+
 ```
 CURRENT_CMS_VERSION='12.4'
 ```
 
 ### t3upgrader/.env
+
 BASE_CMS_VERSION
 Starting version
+
 ```
 BASE_CMS_VERSION='10.4'
 ```
@@ -77,15 +109,17 @@ Branches are expected with following names
 {BRANCH_PREFIX}-{CMS_VERSIONS[0]}
 {BRANCH_PREFIX}-{CMS_VERSIONS[1]}
 etc.
+
 ```
 BRANCH_PREFIX='typo3'
 CMS_VERSIONS='10.4 11.5'
 ```
+
 typo3-10.4
 typo3-11.5
 
-
 ### t3upgrader/versions/xx.xx
+
 db-fixtures.sql
 Possibility to set db changings
 
@@ -132,6 +166,7 @@ Additionally you can put additional scripts there and add it to update-script.sh
 5. optional: you can put the lines directly in upgrade-script.sh
 
 Example
+
 ```
 ddev typo3 gridtocontainer:migrateall 1 container_2columns_8-4 clean 0,1 200,201
 ddev typo3 gridtocontainer:migrateall 2 container_2columns_6-6 clean 0,1 200,201
