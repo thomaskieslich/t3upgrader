@@ -6,7 +6,7 @@ set -ex
 source "./t3upgrader/.env"
 
 # get Version Settings
-source ".env.t3upgrader"
+source ${ROOT_ENV_FILE}
 
 #7.6
 vendor/bin/typo3cms install:generatepackagestates
