@@ -18,7 +18,6 @@ LAST_VERSION=${VERSIONS[@]: -1}
 
 # Create Directories
 mkdir -p ${DB_BACKUP_DIR}
-mkdir -p ${LOG_DIR}
 
 initUpgrade() {
   echo "Create DB Backup Dir"
@@ -29,11 +28,10 @@ initUpgrade() {
 
   if [ "${version}" = "${BASE_CMS_VERSION}" ]; then
     echo "Copy Production DB"
-    rm -rf ${LOG_DIR}/*
     cp ${BASE_DB} ${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz
   else
     echo "Export current DB ..."
-    ddev export-db -z -f ${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz | tee ${LOG_DIR}/upgrade-${version}.log
+    ddev export-db -z -f ${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz
   fi
 }
 
@@ -52,6 +50,7 @@ importCleanDB() {
 }
 
 cleanFolders() {
+  echo "Clean Folders ..."
   rm -rf ./public/typo3conf/ext && rm -rf ./public/typo3conf/l10n
   rm -rf ./public/_assets && rm -rf ./public/typo3 && rm -rf ./public/index.php
   rm -rf ./var && rm -rf ./public/typo3temp
@@ -69,7 +68,7 @@ updateTYPO3() {
 
 finishUpgrade() {
   echo "Export current DB ..."
-  ddev export-db -z -f ${DB_BACKUP_DIR}/${version}/typo3-db-${version}-final.sql.gz | tee ${LOG_DIR}/upgrade-${version}.log
+  ddev export-db -z -f ${DB_BACKUP_DIR}/${version}/typo3-db-${version}-final.sql.gz
 
     # If not last version, stop DDEV and continue with next version
     if [ "${version}" != "${LAST_VERSION}" ]; then
