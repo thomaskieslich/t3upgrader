@@ -53,7 +53,6 @@ cleanFolders() {
   echo "Clean Folders ..."
   rm -rf ./public/typo3conf/ext && rm -rf ./public/typo3conf/l10n
   rm -rf ./public/_assets && rm -rf ./public/typo3 && rm -rf ./public/index.php
-  rm -rf ./config/system
   rm -rf ./var && rm -rf ./public/typo3temp
   rm -rf ./vendor
 }
