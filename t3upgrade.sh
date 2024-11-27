@@ -23,9 +23,6 @@ initUpgrade() {
   echo "Create DB Backup Dir"
   mkdir -p ${DB_BACKUP_DIR}/${version}
 
-  echo "Checkout ${version} branch ..."
-  git checkout ${BRANCH_PREFIX}-${version}
-
   if [ "${version}" = "${BASE_CMS_VERSION}" ]; then
     echo "Copy Production DB"
     cp ${BASE_DB} ${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz
@@ -33,6 +30,9 @@ initUpgrade() {
     echo "Export current DB ..."
     ddev export-db -z -f ${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz
   fi
+
+  echo "Checkout ${version} branch ..."
+  git checkout ${BRANCH_PREFIX}-${version}
 }
 
 importCleanDB() {
