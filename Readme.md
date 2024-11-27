@@ -43,11 +43,13 @@ git checkout -b upgrade/typo3-11.5
 
 4. copy /t3upgrader/.env.dist to /t3upgrader/.env and Update the variables.
 
-5. create .env.upgrader in Project Root
+5. create .env.t3upgrader in Project Root
 
 ```
-# t3upgrader CMS_VERSIONS='7.6 8.7 10.4 11.5 12.4 13.4' move to root .env.upgrader
+# TYPO3 Version(s) to Upgrade
 CMS_VERSIONS='11.5'
+
+# TYPO3 Version of Current Branch
 CURRENT_CMS_VERSION='11.5'
 ```
 

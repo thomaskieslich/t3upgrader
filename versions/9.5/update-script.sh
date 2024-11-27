@@ -6,7 +6,7 @@
 source "./t3upgrader/.env"
 
 # get Version Settings
-source ".env"
+source ".env.t3upgrader"
 
 # 9.5
 vendor/bin/typo3cms -nq install:generatepackagestates
