@@ -19,6 +19,16 @@ LAST_VERSION=${VERSIONS[@]: -1}
 # Create Directories
 mkdir -p ${DB_BACKUP_DIR}
 
+splitVersions() {
+  if [[ $version == *.* ]]; then
+    major_version="${version%%.*}"
+    minor_version="${version##*.}"
+  else
+    major_version=$version
+    minor_version=0
+  fi
+}
+
 initUpgrade() {
   echo "Create DB Backup Dir"
   mkdir -p ${DB_BACKUP_DIR}/${version}
@@ -55,6 +65,11 @@ cleanFolders() {
   rm -rf ./public/_assets && rm -rf ./public/typo3 && rm -rf ./public/index.php
   rm -rf ./var && rm -rf ./public/typo3temp
   rm -rf ./vendor
+
+  ## clean system Folder if necessary
+#  if [ "$major_version" -lt 12 ]; then
+#    rm -rf ./config/system
+#  fi
 }
 
 composerInstall() {
@@ -70,17 +85,18 @@ finishUpgrade() {
   echo "Export current DB ..."
   ddev export-db -z -f ${DB_BACKUP_DIR}/${version}/typo3-db-${version}-final.sql.gz
 
-    # If not last version, stop DDEV and continue with next version
-    if [ "${version}" != "${LAST_VERSION}" ]; then
-      echo "DDEV Stop ..."
-      ddev stop
-    else
-      echo "Upgrade finished!"
-    fi
+  # If not last version, stop DDEV and continue with next version
+  if [ "${version}" != "${LAST_VERSION}" ]; then
+    echo "DDEV Stop ..."
+    ddev stop
+  else
+    echo "Upgrade finished!"
+  fi
 }
 
 # Loop through versions and upgrade step by step
 for version in "${VERSIONS[@]}"; do
+  splitVersions
   initUpgrade
   importCleanDB
   cleanFolders
