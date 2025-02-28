@@ -9,13 +9,21 @@ source "./t3upgrader/.env"
 source ${ROOT_ENV_FILE}
 
 # 11.5
-vendor/bin/typo3 -nq install:fixfolderstructure
-vendor/bin/typo3 -nq install:extensionsetupifpossible
-vendor/bin/typo3 -nq language:update
 
-vendor/bin/typo3 -nq database:import <${VERSIONS_DIR}/${CURRENT_CMS_VERSION}/"db-fixtures.sql"
-vendor/bin/typo3 -nq upgrade:run
-vendor/bin/typo3 -nq database:updateschema
-vendor/bin/typo3 -nq cache:flush
-vendor/bin/typo3 -nq referenceindex:update
-vendor/bin/typo3 -nq cache:warmup
+TYPO3_CLI_Command=vendor/bin/typo3
+
+if vendor/bin/typo3 help install:fixfolderstructure > /dev/null 2>&1; then
+  TYPO3_CLI_Command=vendor/bin/typo3
+else
+  TYPO3_CLI_Command=vendor/bin/typo3cms
+fi
+
+$TYPO3_CLI_Command -nq install:extensionsetupifpossible
+$TYPO3_CLI_Command -nq language:update
+
+$TYPO3_CLI_Command -nq database:import <${VERSIONS_DIR}/${CURRENT_CMS_VERSION}/"db-fixtures.sql"
+$TYPO3_CLI_Command -nq upgrade:run
+$TYPO3_CLI_Command -nq database:updateschema
+$TYPO3_CLI_Command -nq cache:flush
+$TYPO3_CLI_Command -nq referenceindex:update
+$TYPO3_CLI_Command -nq cache:warmup
