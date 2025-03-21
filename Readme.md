@@ -2,20 +2,20 @@
 
 Based on:
 
-https://github.com/peter-neumann-dev/ddev-cms-upgrader  
+https://github.com/peter-neumann-dev/ddev-cms-upgrader
 
 https://typo3.org/article/automatic-typo3-updates-across-several-major-versions-with-ddev
 
 Thanks for this work.
 
-I changed the Concept to move the Processes outside of ddev and other things. 
-The Main Goal is to have one branch for each TYPO3 version and this Script to run the Upgrades 
+I changed the Concept to move the Processes outside of ddev hooks and other things.
+The Main Goal is to have one branch for each TYPO3 version and this Script to run the Upgrades
 over all Version Branches.
 - can change the DB Version between Versions
 - can use custom script and DB Fixtures for each version
 - can be overwritten in versions-override Folder
 
-The code adjustments for each version still have to be made manually. 
+The code adjustments for each version still have to be made manually.
 However, testing and upgrading with the current live data is much easier.
 I usually use https://github.com/thomaskieslich/t3static to test and customise the code.
 
