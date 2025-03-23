@@ -1,31 +1,30 @@
 #!/bin/bash
 
 # set -x
-# set -e
+set -eu
 
 # Get base Settings
-if [ -f ${BASH_SOURCE%/*}/.env ]; then
+if [ -f "${BASH_SOURCE%/*}"/.env ]; then
   source "${BASH_SOURCE%/*}/.env"
 fi
 
 # get Version Settings
+# shellcheck source=.env
 source "${ROOT_ENV_FILE}"
 
-VERSIONS=(${CMS_VERSIONS})
+IFS=' ' read -ra VERSIONS <<< "${CMS_VERSIONS}"
 
 # Get last version to upgrade to
-LAST_VERSION=${VERSIONS[@]: -1}
+LAST_VERSION=${VERSIONS[*]: -1}
 
 # Create Directories
-mkdir -p ${DB_BACKUP_DIR}
+mkdir -p "${DB_BACKUP_DIR}"
 
 splitVersions() {
   if [[ $version == *.* ]]; then
     major_version="${version%%.*}"
-    minor_version="${version##*.}"
   else
     major_version=$version
-    minor_version=0
   fi
 }
 
@@ -67,9 +66,9 @@ cleanFolders() {
   rm -rf ./vendor
 
   ## clean system Folder if necessary
-#  if [ "$major_version" -lt 12 ]; then
-#    rm -rf ./config/system
-#  fi
+  if [ "$major_version" -lt 12 ]; then
+    rm -rf ./config/system
+  fi
 }
 
 composerInstall() {
