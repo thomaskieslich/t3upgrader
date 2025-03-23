@@ -6,7 +6,8 @@
 source "./t3upgrader/.env"
 
 # get Version Settings
-source ${ROOT_ENV_FILE}
+# shellcheck source=.env
+source "${ROOT_ENV_FILE}"
 
 # 12.4
 vendor/bin/typo3 -nq install:fixfolderstructure
