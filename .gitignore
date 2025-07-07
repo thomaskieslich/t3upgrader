@@ -1,3 +1,6 @@
+# IDEs #
+.DS_Store
+
 /db-backup/*
 /logs/*
 /versions-override/*
