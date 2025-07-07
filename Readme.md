@@ -133,13 +133,13 @@ Additionally you can put additional scripts there and add it to update-script.sh
     * ```BASE_CMS_VERSION='10.4'``` (Starting version)
 2. run sync script
 3. Checkout new branch for 10.4: ```git checkout -b typo3-10.4```
-5. Create root-.env with CMS_VERSIONS and CURRENT_CMS_VERSION
+5. Create root-.env.t3upgrader with CMS_VERSIONS and CURRENT_CMS_VERSION
     * ```CMS_VERSIONS='10.4'```
     * ```CURRENT_CMS_VERSION='10.4'```
 6. commit state, because upgrader will switch between branches
 7. ```./t3upgrader/t3upgrade.sh```
 9. Checkout new branch for 11.5: ```git checkout -b typo3-11.5```
-10. Adjust root-.env
+10. Adjust root-.env.t3upgrader
     * ```CMS_VERSIONS='10.4 11.5'```
     * ```CURRENT_CMS_VERSION='11.5’```
 11. set needed package versions and php version to composer.json, set needed php version to .ddev/config
@@ -148,7 +148,7 @@ Additionally you can put additional scripts there and add it to update-script.sh
 12. commit state, because upgrader will switch between branches
 13. ```./t3upgrader/t3upgrade.sh```
 14. Checkout new branch for 12.4: ```git checkout -b typo3-12.4```
-15. Root-.env anpassen
+15. Root-.env.t3upgrader anpassen
     * ```CMS_VERSIONS='10.4 11.5 12.4’```
     * ```CURRENT_CMS_VERSION='12.4’```
 16. set needed package versions and php version to composer.json, set needed php version to .ddev/config
