@@ -34,8 +34,16 @@ initUpgrade() {
   mkdir -p ${DB_BACKUP_DIR}/${version}
 
   if [ "${version}" = "${BASE_CMS_VERSION}" ]; then
-    echoStep "Copy Production DB \n cp ${BASE_DB} ${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz"
-    cp ${BASE_DB} ${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz
+
+    # put backup-file in t3upgrader-path
+    # if it is plain sql, we have to compress it before
+    if [[ "$BASE_DB" == *.sql ]]; then
+      echoStep "DB base dump is plain .sql-file – compressing with gzip and copy... \n gzip -c ${BASE_DB} > ${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz"
+      gzip -c ${BASE_DB} > ${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz
+    else
+      echoStep "Copy Production DB \n cp ${BASE_DB} ${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz"
+      cp ${BASE_DB} ${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz
+    fi
   else
     echoStep "Export current DB ... \n ddev export-db -z -f ${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz"
     ddev export-db -z -f ${DB_BACKUP_DIR}/${version}/typo3-db-${version}.sql.gz
