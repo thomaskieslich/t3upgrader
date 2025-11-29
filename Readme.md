@@ -24,9 +24,9 @@ I usually use https://github.com/thomaskieslich/t3static to test and customise t
 1. Create branch with the same Name like the current/legacy TYPO3 Version.
 
 ```bash
-git checkout -b typo3-11.5
+git checkout -b typo3-13.4
 #or with subpath
-git checkout -b upgrade/typo3-11.5
+git checkout -b upgrade/typo3-13.4
 ```
 
 2. Add this to root .gitignore to have the same code in all project Branches.
@@ -46,19 +46,19 @@ git checkout -b upgrade/typo3-11.5
 5. create .env.t3upgrader in Project Root
 
 ```
-# TYPO3 Version(s) 7.6 8.7 10.4 11.5 12.4 13.4 to Upgrade
-CMS_VERSIONS='11.5'
+# TYPO3 Version(s) 7.6 8.7 10.4 11.5 12.4 13.4 14.3 to Upgrade
+CMS_VERSIONS='13.4'
 
 # TYPO3 Version of Current Branch
-CURRENT_CMS_VERSION='11.5'
+CURRENT_CMS_VERSION='13.4'
 ```
 
 CMS_VERSIONS and CURRENT_CMS_VERSION should be identical in the Version you Start.
 
 Always add only the respective version of the current branch in the .env.upgrader file
-That means: if you start in branch 11.5, versions in .env.upgrader file are only "11.5"
-If you create (or switch) to the next branch 12.4, versions in .env file should "11.5 12.4"
-In the next branch 13.4, version should be "11.5 12.4 13.4" and so on … That gives you
+That means: if you start in branch 12.4, versions in .env.upgrader file are only "12.4"
+If you create (or switch) to the next branch 13.4, versions in .env file should "12.4 13.4"
+In the next branch 14.3, version should be "12.4 13.4 14.3" and so on … That gives you
 the possibility of running the upgrade only up to the current branch.
 In Development testing you can set both versions to the current TYPO3 Version only.
 
@@ -77,23 +77,23 @@ In Development testing you can set both versions to the current TYPO3 Version on
 Is changed per update branch (see below). All versions from starting version to current branch version
 
 ```
-CMS_VERSIONS='10.4 11.5 12.4'
+CMS_VERSIONS='12.4 13.4 14.3'
 ```
 
 #### CURRENT_CMS_VERSION
 
 Current branch version
 
-Branch: typo3-11.5
+Branch: typo3-13.4
 
 ```
-CURRENT_CMS_VERSION='11.5'
+CURRENT_CMS_VERSION='13.4'
 ```
 
-Branch: typo3-12.4
+Branch: typo3-14.3
 
 ```
-CURRENT_CMS_VERSION='12.4'
+CURRENT_CMS_VERSION='14.3'
 ```
 
 ### t3upgrader/.env
@@ -102,7 +102,7 @@ BASE_CMS_VERSION
 Starting version
 
 ```
-BASE_CMS_VERSION='10.4'
+BASE_CMS_VERSION='12.4'
 ```
 
 ### Branches
@@ -114,11 +114,12 @@ etc.
 
 ```
 BRANCH_PREFIX='typo3'
-CMS_VERSIONS='10.4 11.5'
+CMS_VERSIONS='12.4 13.4 14.3'
 ```
 
-typo3-10.4
-typo3-11.5
+typo3-12.4
+typo3-13.4
+typo3-14.3
 
 ### t3upgrader/versions/xx.xx
 
@@ -127,30 +128,30 @@ Possibility to set db changings
 
 Additionally you can put additional scripts there and add it to update-script.sh (example below)
 
-## Example steps v10 to v12
+## Example steps v12 to v14
 
 1. t3upgrader/.env adjust all values if necessary (CMS_VERSIONS and CURRENT_CMS_VERSION remain commented out)
-    * ```BASE_CMS_VERSION='10.4'``` (Starting version)
+    * ```BASE_CMS_VERSION='12.4'``` (Starting version)
 2. run sync script
-3. Checkout new branch for 10.4: ```git checkout -b typo3-10.4```
+3. Checkout new branch for 12.4: ```git checkout -b upgrade/typo3-12.4```
 5. Create root-.env.t3upgrader with CMS_VERSIONS and CURRENT_CMS_VERSION
-    * ```CMS_VERSIONS='10.4'```
-    * ```CURRENT_CMS_VERSION='10.4'```
+    * ```CMS_VERSIONS='12.4'```
+    * ```CURRENT_CMS_VERSION='12.4'```
 6. commit state, because upgrader will switch between branches
 7. ```./t3upgrader/t3upgrade.sh```
-9. Checkout new branch for 11.5: ```git checkout -b typo3-11.5```
+9. Checkout new branch for 13.4: ```git checkout -b upgrade/typo3-13.4```
 10. Adjust root-.env.t3upgrader
-    * ```CMS_VERSIONS='10.4 11.5'```
-    * ```CURRENT_CMS_VERSION='11.5’```
+    * ```CMS_VERSIONS='12.4 13.4'```
+    * ```CURRENT_CMS_VERSION='13.4’```
 11. set needed package versions and php version to composer.json, set needed php version to .ddev/config
     1. ```ddev restart```
     2. ```ddev composer u``` to test that all versions are correct
 12. commit state, because upgrader will switch between branches
 13. ```./t3upgrader/t3upgrade.sh```
-14. Checkout new branch for 12.4: ```git checkout -b typo3-12.4```
+14. Checkout new branch for 14.3: ```git checkout -b upgrade/typo3-14.3```
 15. Root-.env.t3upgrader anpassen
-    * ```CMS_VERSIONS='10.4 11.5 12.4’```
-    * ```CURRENT_CMS_VERSION='12.4’```
+    * ```CMS_VERSIONS='12.4 13.4 14.3’```
+    * ```CURRENT_CMS_VERSION='14.3’```
 16. set needed package versions and php version to composer.json, set needed php version to .ddev/config
     1. ```ddev restart```
     2. ```ddev composer u``` to test that all versions are correct
@@ -181,6 +182,6 @@ ddev typo3 gridtocontainer:migrateall 4 container_3columns_4-4-4 clean 0,1,2 200
 You can set the CMS_VERSIONS to a specific version, so you can run the upgrader only for that one, if you need it
 
 ```
-CMS_VERSIONS='11.5'
-CURRENT_CMS_VERSION='11.5'
+CMS_VERSIONS='13.4'
+CURRENT_CMS_VERSION='13.4'
 ``
