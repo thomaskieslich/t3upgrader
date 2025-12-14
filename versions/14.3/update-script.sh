@@ -9,20 +9,20 @@ source "./t3upgrader/.env"
 source ${ROOT_ENV_FILE}
 
 # 14.3
-# Repair folder structure ((typo3-console))
-#vendor/bin/typo3 -nq install:fixfolderstructure
+# Repair folder structure (typo3-console)
+vendor/bin/typo3 -nq install:fixfolderstructure
 
 # Initialize extensions (typo3-cli)
 vendor/bin/typo3 -nq extension:setup
 
 # (typo3-console)
-#vendor/bin/typo3 -nq database:import <${VERSIONS_DIR}/${CURRENT_CMS_VERSION}/"db-fixtures.sql"
+vendor/bin/typo3 -nq database:import <${VERSIONS_DIR}/${CURRENT_CMS_VERSION}/"db-fixtures.sql"
 
 # (typo3-cli)
 vendor/bin/typo3 -nq upgrade:run
 
 # (typo3-console)
-#vendor/bin/typo3 -nq database:updateschema
+vendor/bin/typo3 -nq database:updateschema
 
 # (typo3-cli)
 vendor/bin/typo3 -nq language:update
