@@ -1,5 +1,8 @@
 # Upgrate TYPO3 Versions
 
+Original Repository on: https://codeberg.org/kiesi/t3upgrader
+Mirror is on Github: https://github.com/thomaskieslich/t3upgrader
+
 Based on:
 
 https://github.com/peter-neumann-dev/ddev-cms-upgrader
