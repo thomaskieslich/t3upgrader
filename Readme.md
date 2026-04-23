@@ -1,4 +1,4 @@
-# Upgrate TYPO3 Versions
+# Upgrade TYPO3 Versions
 
 Based on:
 
@@ -55,9 +55,9 @@ CURRENT_CMS_VERSION='13.4'
 
 CMS_VERSIONS and CURRENT_CMS_VERSION should be identical in the Version you Start.
 
-Always add only the respective version of the current branch in the .env.upgrader file
-That means: if you start in branch 12.4, versions in .env.upgrader file are only "12.4"
-If you create (or switch) to the next branch 13.4, versions in .env file should "12.4 13.4"
+Always add only the respective version of the current branch in the .env.t3upgrader file
+That means: if you start in branch 12.4, versions in .env.t3upgrader file are only "12.4"
+If you create (or switch) to the next branch 13.4, versions in .env.t3upgrader file should "12.4 13.4"
 In the next branch 14.3, version should be "12.4 13.4 14.3" and so on … That gives you
 the possibility of running the upgrade only up to the current branch.
 In Development testing you can set both versions to the current TYPO3 Version only.
@@ -126,7 +126,11 @@ typo3-14.3
 db-fixtures.sql
 Possibility to set db changings
 
-Additionally you can put additional scripts there and add it to update-script.sh (example below)
+Additionally you can put additional scripts there and add it to update-script.sh (example below).
+
+**Note:** Some commands in `update-script.sh` (e.g., `database:import`, `extension:setup`)
+are from the [typo3-console](https://github.com/bk2k/typo3-console) extension.
+It must be installed and available via `vendor/bin/typo3`.
 
 ## Example steps v12 to v14
 
@@ -134,13 +138,13 @@ Additionally you can put additional scripts there and add it to update-script.sh
     * ```BASE_CMS_VERSION='12.4'``` (Starting version)
 2. run sync script
 3. Checkout new branch for 12.4: ```git checkout -b upgrade/typo3-12.4```
-5. Create root-.env.t3upgrader with CMS_VERSIONS and CURRENT_CMS_VERSION
+4. Create .env.t3upgrader with CMS_VERSIONS and CURRENT_CMS_VERSION
     * ```CMS_VERSIONS='12.4'```
     * ```CURRENT_CMS_VERSION='12.4'```
 6. commit state, because upgrader will switch between branches
 7. ```./t3upgrader/t3upgrade.sh```
 9. Checkout new branch for 13.4: ```git checkout -b upgrade/typo3-13.4```
-10. Adjust root-.env.t3upgrader
+10. Adjust .env.t3upgrader
     * ```CMS_VERSIONS='12.4 13.4'```
     * ```CURRENT_CMS_VERSION='13.4’```
 11. set needed package versions and php version to composer.json, set needed php version to .ddev/config
@@ -149,7 +153,7 @@ Additionally you can put additional scripts there and add it to update-script.sh
 12. commit state, because upgrader will switch between branches
 13. ```./t3upgrader/t3upgrade.sh```
 14. Checkout new branch for 14.3: ```git checkout -b upgrade/typo3-14.3```
-15. Root-.env.t3upgrader anpassen
+15. .env.t3upgrader anpassen
     * ```CMS_VERSIONS='12.4 13.4 14.3’```
     * ```CURRENT_CMS_VERSION='14.3’```
 16. set needed package versions and php version to composer.json, set needed php version to .ddev/config
