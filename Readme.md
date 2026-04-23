@@ -1,5 +1,9 @@
 # Upgrade TYPO3 Versions
 
+<span style="color:red;">!!!</span> Original Repository on: https://codeberg.org/kiesi/t3upgrader <span style="color:red;">!!!</span>
+
+Mirror only on Github: https://github.com/thomaskieslich/t3upgrader
+
 Based on:
 
 https://github.com/peter-neumann-dev/ddev-cms-upgrader
@@ -133,8 +137,10 @@ are from the [typo3-console](https://github.com/bk2k/typo3-console) extension.
 It must be installed and available via `vendor/bin/typo3`.
 
 ## Example steps v12 to v14
+## Example steps v12 to v14
 
 1. t3upgrader/.env adjust all values if necessary (CMS_VERSIONS and CURRENT_CMS_VERSION remain commented out)
+    * ```BASE_CMS_VERSION='12.4'``` (Starting version)
     * ```BASE_CMS_VERSION='12.4'``` (Starting version)
 2. run sync script
 3. Checkout new branch for 12.4: ```git checkout -b upgrade/typo3-12.4```
